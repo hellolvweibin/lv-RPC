@@ -5,7 +5,7 @@
  */
 
 
-package com.lv.myRPCIteration.server;
+package com.lv.myRPCIteration.service;
 
 import com.lv.myRPCIteration.common.Blog;
 import com.lv.myRPCIteration.service.BlogService;

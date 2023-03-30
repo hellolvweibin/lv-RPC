@@ -8,7 +8,9 @@
 package com.lv.myRPCIteration.server;
 
 import com.lv.myRPCIteration.service.BlogService;
+import com.lv.myRPCIteration.service.BlogServiceImpl;
 import com.lv.myRPCIteration.service.UserService;
+import com.lv.myRPCIteration.service.UserServiceImpl;
 
 /**
  * @author levi_bee
@@ -25,7 +27,7 @@ public class TestServer {
         serviceProvider.provideServiceInterface(userService);
         serviceProvider.provideServiceInterface(blogService);
 
-        RPCServer RPCServer = new ThreadPoolRPCRPCServer(serviceProvider);
+        RPCServer RPCServer = new NettyRPCServer(serviceProvider);
         RPCServer.start(8899);
     }
 }

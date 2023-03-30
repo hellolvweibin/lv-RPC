@@ -31,9 +31,7 @@ public class ClientProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         RPCRequest request = RPCRequest.builder().interfaceName(method.getDeclaringClass().getName()).methodName(method.getName()).params(args).paramsTypes(method.getParameterTypes()).build();
-        /**
-         * 数据传输
-         */
+         //数据传输
         RPCResponse response = IOClient.sendRequest(host, port, request);
         System.out.println("response:"+response);
 

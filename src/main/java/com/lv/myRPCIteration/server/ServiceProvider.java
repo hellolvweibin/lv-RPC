@@ -12,10 +12,10 @@ import java.util.Map;
 
 /**
  * @author levi_bee
- * * 之前这里使用Map简单实现的
- * * 存放服务接口名与服务端对应的实现类
- * * 服务启动时要暴露其相关的实现类0
- * * 根据request中的interface调用服务端中相关实现类
+ * @description 之前这里使用Map简单实现的
+ * 存放服务接口名与服务端对应的实现类
+ * 服务启动时要暴露其相关的实现类0
+ * 根据request中的interface调用服务端中相关实现类
  */
 public class ServiceProvider {
     /**
