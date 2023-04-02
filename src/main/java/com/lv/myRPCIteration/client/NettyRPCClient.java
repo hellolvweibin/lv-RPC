@@ -2,7 +2,6 @@ package com.lv.myRPCIteration.client;
 
 import com.lv.myRPCIteration.common.RPCRequest;
 import com.lv.myRPCIteration.common.RPCResponse;
-import com.lv.myRPCIteration.server.NettyServerInitializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -47,7 +46,7 @@ public class NettyRPCClient implements RPCClient {
             channel.closeFuture().sync();
             // 阻塞的获得结果，通过给channel设计别名，获取特定名字下的channel中的内容（这个在hanlder中设置）
             // AttributeKey是，线程隔离的，不会由线程安全问题。
-            // 实际上不应通过阻塞，可通过回调函数
+            // 实际上不应通过阻塞，可通过回调函数，后面可以再进行优化
             AttributeKey<RPCResponse> key = AttributeKey.valueOf("RPCResponse");
             RPCResponse response = channel.attr(key).get();
 

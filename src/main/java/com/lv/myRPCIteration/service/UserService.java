@@ -12,12 +12,9 @@ import com.lv.myRPCIteration.common.User;
  * @author levi_bee
  */
 public interface UserService {
-    /**
-     * 客户端通过这个方法调用服务端的实现类
-     */
+    // 客户端通过这个接口调用服务端的实现类
     User getUserByUserId(Integer id);
-    /**
-     * 增加插入用户id功能
-     */
+
     Integer insertUserId(User user);
 }
+

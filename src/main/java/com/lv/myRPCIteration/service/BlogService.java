@@ -12,8 +12,6 @@ import com.lv.myRPCIteration.common.Blog;
  * @author levi_bee
  */
 public interface BlogService {
-    /**
-     * 根据id 查询Blog
-     */
     Blog getBlogById(Integer id);
 }
+
