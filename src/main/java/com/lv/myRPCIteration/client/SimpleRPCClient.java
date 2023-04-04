@@ -9,12 +9,15 @@ package com.lv.myRPCIteration.client;
 
 import com.lv.myRPCIteration.common.RPCRequest;
 import com.lv.myRPCIteration.common.RPCResponse;
+import com.lv.myRPCIteration.register.ServiceRegister;
+import com.lv.myRPCIteration.register.ZkServiceRegister;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -26,6 +29,12 @@ import java.net.Socket;
 public class SimpleRPCClient implements RPCClient {
     private String host;
     private int port;
+    private ServiceRegister serviceRegister;
+
+    public SimpleRPCClient() {
+        //初始化注册中心，建立连接
+        this.serviceRegister = new ZkServiceRegister();
+    }
 
     /**
      * 客户端发起一次请求调用，Socket建立连接，发起请求Request，得到响应Response
@@ -33,22 +42,26 @@ public class SimpleRPCClient implements RPCClient {
      */
     @Override
     public RPCResponse sendRequest(RPCRequest request) {
+        InetSocketAddress address = serviceRegister.serviceDiscovery(request.getInterfaceName());
+        //从注册中心获得host,port
+        host = address.getHostName();
+        port = address.getPort();
 
-            //发起一次Socket请求
-            try {
-                Socket socket = new Socket(host, port);
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-                System.out.println(request);
+        //发起一次Socket请求
+        try {
+            Socket socket = new Socket(host, port);
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            System.out.println(request);
 
-                oos.writeObject(request);
-                oos.flush();
-                RPCResponse rpcResponse = (RPCResponse) ois.readObject();
-                return rpcResponse;
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-                return null;
-            }
+            oos.writeObject(request);
+            oos.flush();
+            RPCResponse rpcResponse = (RPCResponse) ois.readObject();
+            return rpcResponse;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 }
